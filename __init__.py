@@ -1,1 +1,0 @@
-__name__ = "super_mario_python"
