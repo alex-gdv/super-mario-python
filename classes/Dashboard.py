@@ -1,6 +1,6 @@
 import pygame
 
-from classes.Font import Font
+from .Font import Font
 
 
 class Dashboard(Font):

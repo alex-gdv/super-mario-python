@@ -1,6 +1,6 @@
 import pygame
 
-from classes.Maths import Vec2D
+from ..classes.Maths import Vec2D
 
 
 class EntityBase(object):
@@ -17,7 +17,13 @@ class EntityBase(object):
         self.type = ""
         self.onGround = False
         self.obeyGravity = True
+        self.gridX = x
+        self.gridY = y
         
+    def updateGridXY(self, x, y):
+        self.gridX = x
+        self.gridY = y
+
     def applyGravity(self):
         if self.obeyGravity:
             self.vel.y += self.gravity

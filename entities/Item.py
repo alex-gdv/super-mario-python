@@ -1,7 +1,7 @@
 from copy import copy
 
-from classes.Dashboard import Dashboard
-from classes.Maths import Vec2D
+from ..classes.Dashboard import Dashboard
+from ..classes.Maths import Vec2D
 
 
 class Item(Dashboard):

@@ -1,4 +1,4 @@
-from classes.Maths import Vec2D
+from .Maths import Vec2D
 
 
 class Camera:

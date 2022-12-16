@@ -1,7 +1,5 @@
-from copy import copy
-
-from entities.EntityBase import EntityBase
-from entities.Item import Item
+from .EntityBase import EntityBase
+from .Item import Item
 
 
 class CoinBrick(EntityBase):

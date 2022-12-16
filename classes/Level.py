@@ -1,16 +1,22 @@
 import json
 import pygame
+import numpy as np
 
-from classes.Sprites import Sprites
-from classes.Tile import Tile
-from entities.Coin import Coin
-from entities.CoinBrick import CoinBrick
-from entities.Goomba import Goomba
-from entities.Mushroom import RedMushroom
-from entities.Koopa import Koopa
-from entities.CoinBox import CoinBox
-from entities.RandomBox import RandomBox
+from .Sprites import Sprites
+from .Tile import Tile
+from ..entities.Coin import Coin
+from ..entities.CoinBrick import CoinBrick
+from ..entities.Goomba import Goomba
+from ..entities.Mushroom import RedMushroom
+from ..entities.Koopa import Koopa
+from ..entities.CoinBox import CoinBox
+from ..entities.RandomBox import RandomBox
 
+# the number's correspond 
+NAME2NUMBER = {"sky":1, "ground":2, "pipe":3, "CoinBox":5, "coinBrick":7, "coin":11, "Koopa":13,
+            "Goomba":17, "RandomBox":19, "RedMushroom":23, "Mario":29}
+TYPE2NAME = {Goomba:"Goomba", Koopa:"Koopa", RedMushroom:"RedMushroom", Coin:"coin",
+            CoinBox:"CoinBox", CoinBrick:"coinBrick", RandomBox:"RandomBox"}
 
 class Level:
     def __init__(self, screen, sound, dashboard):
@@ -22,13 +28,35 @@ class Level:
         self.levelLength = 0
         self.entityList = []
 
+    def moveOnGrid(self, oldX, oldY, newX, newY, num):
+        if oldX >= 0 and oldX < self.levelLength and oldY >= 0 and oldY < 16:
+            self.levelGrid[oldX][oldY] /= num
+        self.updateLevelGrid(newX, newY, num)
+
+    def updateLevelGrid(self, x, y, num):
+        if x >= 0 and x < self.levelLength and y >= 0 and y < 16:
+            if num == 3:
+                self.levelGrid[x][y:] *= num
+            elif self.levelGrid[x][y]:
+                self.levelGrid[x][y] *= num
+            # with open("level.txt", "w+") as file:
+            print("#################################################################################")
+            for y in range(self.levelGrid.shape[1]):
+                for x in range(16):# self.levelGrid.shape[0]):
+                    print(str(int(self.levelGrid[x][y])), end="\t")
+                    # file.write(str(int(self.levelGrid[x][y])) + "\t")
+                print()
+            print("#################################################################################")
+                # file.write("\n")
+
     def loadLevel(self, levelname):
         with open("./levels/{}.json".format(levelname)) as jsonData:
             data = json.load(jsonData)
+            self.levelLength = data["length"]
+            self.levelGrid = np.ones([self.levelLength, 16])
             self.loadLayers(data)
             self.loadObjects(data)
             self.loadEntities(data)
-            self.levelLength = data["length"]
 
     def loadEntities(self, data):
         try:
@@ -38,9 +66,13 @@ class Level:
             [self.addCoin(x, y) for x, y in data["level"]["entities"]["coin"]]
             [self.addCoinBrick(x, y) for x, y in data["level"]["entities"]["coinBrick"]]
             [self.addRandomBox(x, y, item) for x, y, item in data["level"]["entities"]["RandomBox"]]
-        except:
-            # if no entities in Level
-            pass
+            for entity in ["CoinBox", "Goomba", "Koopa", "coin", "coinBrick"]:
+                for x, y in data["level"]["entities"][entity]:
+                    self.updateLevelGrid(x, y, NAME2NUMBER[entity])
+            for x, y, _ in data["level"]["entities"]["RandomBox"]:
+                self.updateLevelGrid(x, y, NAME2NUMBER["RandomBox"])
+        except Exception as e:
+            print(str(e))
 
     def loadLayers(self, data):
         layers = []
@@ -60,6 +92,9 @@ class Level:
                         ]
                 )
             )
+            for y in range(*data["level"]["layers"]["ground"]["y"]):
+                self.updateLevelGrid(x, y, NAME2NUMBER["ground"])
+
         self.level = list(map(list, zip(*layers)))
 
     def loadObjects(self, data):
@@ -69,6 +104,7 @@ class Level:
             self.addCloudSprite(x, y)
         for x, y, z in data["level"]["objects"]["pipe"]:
             self.addPipeSprite(x, y, z)
+            self.updateLevelGrid(x, y, NAME2NUMBER["pipe"])
         for x, y in data["level"]["objects"]["sky"]:
             self.level[y][x] = Tile(self.sprites.spriteCollection.get("sky"), None)
         for x, y in data["level"]["objects"]["ground"]:
@@ -76,10 +112,20 @@ class Level:
                 self.sprites.spriteCollection.get("ground"),
                 pygame.Rect(x * 32, y * 32, 32, 32),
             )
+            self.updateLevelGrid(x, y, NAME2NUMBER["ground"])
 
     def updateEntities(self, cam):
         for entity in self.entityList:
             entity.update(cam)
+            gridXCurr = round(entity.rect.x / 32)
+            gridYCurr = round(entity.rect.y / 32)
+            num = NAME2NUMBER[TYPE2NAME[type(entity)]]
+            if (gridXCurr, gridYCurr) != (entity.gridX, entity.gridY):
+                self.moveOnGrid(entity.gridX, entity.gridY, gridXCurr, gridYCurr, num)
+                entity.updateGridXY(gridXCurr, gridYCurr)
+            # if new item spawns
+            elif self.levelGrid[gridXCurr][gridYCurr] % num != 0:
+                self.moveOnGrid(-1, -1, gridXCurr, gridYCurr, num)
             if entity.alive is None:
                 self.entityList.remove(entity)
 
@@ -203,3 +249,4 @@ class Level:
         self.entityList.append(
             RedMushroom(self.screen, self.sprites.spriteCollection, x, y, self, self.sound)
         )
+

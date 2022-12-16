@@ -1,4 +1,4 @@
-from classes.Spritesheet import Spritesheet
+from .Spritesheet import Spritesheet
 import pygame
 
 

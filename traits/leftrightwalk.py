@@ -1,6 +1,6 @@
 import random
 
-from classes.Collider import Collider
+from ..classes.Collider import Collider
 
 
 class LeftRightWalkTrait:

@@ -1,17 +1,17 @@
 import pygame
 
-from classes.Animation import Animation
-from classes.Camera import Camera
-from classes.Collider import Collider
-from classes.EntityCollider import EntityCollider
-from classes.Input import Input
-from classes.Sprites import Sprites
-from entities.EntityBase import EntityBase
-from entities.Mushroom import RedMushroom
-from traits.bounce import bounceTrait
-from traits.go import GoTrait
-from traits.jump import JumpTrait
-from classes.Pause import Pause
+from ..classes.Animation import Animation
+from ..classes.Camera import Camera
+from ..classes.Collider import Collider
+from ..classes.EntityCollider import EntityCollider
+from ..classes.Input import Input
+from ..classes.Sprites import Sprites
+from .EntityBase import EntityBase
+from .Mushroom import RedMushroom
+from ..traits.bounce import bounceTrait
+from ..traits.go import GoTrait
+from ..traits.jump import JumpTrait
+from ..classes.Pause import Pause
 
 spriteCollection = Sprites().spriteCollection
 smallAnimation = Animation(

@@ -1,6 +1,6 @@
 from copy import copy
 
-from entities.EntityBase import EntityBase
+from .EntityBase import EntityBase
 
 
 class RandomBox(EntityBase):
