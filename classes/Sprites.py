@@ -9,13 +9,13 @@ class Sprites:
     def __init__(self):
         self.spriteCollection = self.loadSprites(
             [
-                "./sprites/Mario.json",
-                "./sprites/Goomba.json",
-                "./sprites/Koopa.json",
-                "./sprites/Animations.json",
-                "./sprites/BackgroundSprites.json",
-                "./sprites/ItemAnimations.json",
-                "./sprites/RedMushroom.json"
+                "./src/super_mario_python/sprites/Mario.json",
+                "./src/super_mario_python/sprites/Goomba.json",
+                "./src/super_mario_python/sprites/Koopa.json",
+                "./src/super_mario_python/sprites/Animations.json",
+                "./src/super_mario_python/sprites/BackgroundSprites.json",
+                "./src/super_mario_python/sprites/ItemAnimations.json",
+                "./src/super_mario_python/sprites/RedMushroom.json"
             ]
         )
 

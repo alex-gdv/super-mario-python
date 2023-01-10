@@ -6,7 +6,7 @@ from ..classes.Maths import Vec2D
 
 class Item(Dashboard):
     def __init__(self, collection, screen, x, y):
-        super(Item, self).__init__("./img/font.png", 8, screen)
+        super(Item, self).__init__("./src/super_mario_python/img/font.png", 8, screen)
         self.ItemPos = Vec2D(x, y)
         self.itemVel = Vec2D(0, 0)
         self.screen = screen

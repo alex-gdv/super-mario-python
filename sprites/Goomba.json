@@ -1,5 +1,5 @@
 {
-    "spriteSheetURL": "./img/characters.gif",
+    "spriteSheetURL": "./src/super_mario_python/img/characters.gif",
     "type":"character",
     "size":[16,16],
     "sprites":[

@@ -39,18 +39,18 @@ class Level:
                 self.levelGrid[x][y:] *= num
             elif self.levelGrid[x][y]:
                 self.levelGrid[x][y] *= num
-            # with open("level.txt", "w+") as file:
-            print("#################################################################################")
-            for y in range(self.levelGrid.shape[1]):
-                for x in range(16):# self.levelGrid.shape[0]):
-                    print(str(int(self.levelGrid[x][y])), end="\t")
-                    # file.write(str(int(self.levelGrid[x][y])) + "\t")
-                print()
-            print("#################################################################################")
-                # file.write("\n")
+            # # with open("level.txt", "w+") as file:
+            # print("#################################################################################")
+            # for y in range(self.levelGrid.shape[1]):
+            #     for x in range(16):# self.levelGrid.shape[0]):
+            #         print(str(int(self.levelGrid[x][y])), end="\t")
+            #         # file.write(str(int(self.levelGrid[x][y])) + "\t")
+            #     print()
+            # print("#################################################################################")
+            #     # file.write("\n")
 
     def loadLevel(self, levelname):
-        with open("./levels/{}.json".format(levelname)) as jsonData:
+        with open("./src/super_mario_python/levels/{}.json".format(levelname)) as jsonData:
             data = json.load(jsonData)
             self.levelLength = data["length"]
             self.levelGrid = np.ones([self.levelLength, 16])

@@ -1,5 +1,5 @@
 {
-    "spriteSheetURL": "./img/koopas.png",
+    "spriteSheetURL": "./src/super_mario_python/img/koopas.png",
     "type":"character",
     "size":[17,32],
     "sprites":[

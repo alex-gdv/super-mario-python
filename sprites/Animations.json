@@ -1,5 +1,5 @@
 {
-    "spriteSheetURL": "./img/tiles.png",
+    "spriteSheetURL": "./src/super_mario_python/img/tiles.png",
     "type":"animation",
     "sprites":[
         {

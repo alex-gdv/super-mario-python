@@ -21,7 +21,7 @@ class Menu:
         self.inChoosingLevel = False
         self.dashboard = dashboard
         self.levelCount = 0
-        self.spritesheet = Spritesheet("./img/title_screen.png")
+        self.spritesheet = Spritesheet("./src/super_mario_python/img/title_screen.png")
         self.menu_banner = self.spritesheet.image_at(
             0,
             60,
@@ -37,7 +37,7 @@ class Menu:
         self.menu_dot2 = self.spritesheet.image_at(
             20, 150, 2, colorkey=[255, 0, 220], ignoreTileSize=True
         )
-        self.loadSettings("./settings.json")
+        self.loadSettings("./src/super_mario_python/settings.json")
 
     def update(self):
         self.checkInput()
@@ -85,7 +85,7 @@ class Menu:
             self.music = False
             self.sound.allowSFX = False
             self.sfx = False
-            self.saveSettings("./settings.json")
+            self.saveSettings("./src/super_mario_python/settings.json")
 
     def saveSettings(self, url):
         data = {"sound": self.music, "sfx": self.sfx}
@@ -180,7 +180,7 @@ class Menu:
     def loadLevelNames(self):
         files = []
         res = []
-        for r, d, f in os.walk("./levels"):
+        for r, d, f in os.walk("./src/super_mario_python/levels"):
             for file in f:
                 files.append(os.path.join(r, file))
         for f in files:
@@ -251,7 +251,7 @@ class Menu:
                             else:
                                 self.sound.music_channel.play(self.sound.soundtrack, loops=-1)
                                 self.music = True
-                            self.saveSettings("./settings.json")
+                            self.saveSettings("./src/super_mario_python/settings.json")
                         elif self.state == 1:
                             if self.sfx:
                                 self.sound.allowSFX = False
@@ -259,7 +259,7 @@ class Menu:
                             else:
                                 self.sound.allowSFX = True
                                 self.sfx = True
-                            self.saveSettings("./settings.json")
+                            self.saveSettings("./src/super_mario_python/settings.json")
                         elif self.state == 2:
                             self.inSettings = False
         pygame.display.update()
